@@ -518,37 +518,13 @@ window.addEventListener("resize", () => {
   zoomTo(focus === root ? [root.x, root.y, root.r*2] : view);
 });
 
-/* ---------------- LEADERBOARD (flagship only — real named entries) ---------------- */
-const maxT = Math.max(...flagship.map(n=>n.triples));
+/* ---------------- LEADERBOARD (placeholder until live data loads) ---------------- */
 const lb = document.getElementById("leaderboard");
-[...flagship].sort((a,b)=>b.triples-a.triples).slice(0,5).forEach((d,i)=>{
-  const row = document.createElement("div");
-  row.className = "lb-row";
-  row.innerHTML = `
-    <span class="lb-rank">${i+1}</span>
-    <div>
-      <span class="lb-name">${d.name}</span> <span class="lb-domain">${d.domain}</span>
-      <div class="lb-bar-track"><div class="lb-bar-fill" style="width:${(d.triples/maxT*100).toFixed(0)}%; background:${DOMAIN_COLORS[d.domain]}"></div></div>
-    </div>
-    <span class="lb-value">${fmtTriples(d.triples)}</span>`;
-  lb.appendChild(row);
-});
+if(lb) lb.innerHTML = '<div class="lb-row">Loading largest KGs…</div>';
 
-/* ---------------- LATEST UPDATES ---------------- */
-const order = ["Today","2 days ago","5 days ago","6 days ago","10 days ago","2 weeks ago","3 weeks ago","1 month ago","2 months ago","4 months ago"];
+/* ---------------- LATEST UPDATES (placeholder until live data loads) ---------------- */
 const upd = document.getElementById("updates");
-[...flagship].sort((a,b)=>order.indexOf(a.updated)-order.indexOf(b.updated)).slice(0,5).forEach(d=>{
-  const item = document.createElement("div");
-  item.className = "upd-item";
-  item.innerHTML = `
-    <span class="upd-dot" style="background:${DOMAIN_COLORS[d.domain]}"></span>
-    <div>
-      <h4>${d.name}</h4>
-      <p>${d.desc}</p>
-      <span class="upd-meta">${d.updated} · ${d.domain}</span>
-    </div>`;
-  upd.appendChild(item);
-});
+if(upd) upd.innerHTML = '<div class="upd-item">Loading recent updates…</div>';
 
 /* ---------------- DOMAIN CHIPS (legend, doubles as filter entry point) ---------------- */
 const chips = document.getElementById("domainChips");
